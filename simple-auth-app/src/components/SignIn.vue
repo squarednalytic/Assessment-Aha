@@ -1,0 +1,53 @@
+<template>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="12" md="6">
+        <v-card class="pa-5">
+          <v-card-title class="headline">Sign In</v-card-title>
+          <v-card-text>
+            <v-form @submit.prevent="signIn">
+              <v-text-field
+                v-model="username"
+                label="Username"
+                prepend-icon="fas fa-user"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                type="password"
+                prepend-icon="fas fa-lock"
+                required
+              ></v-text-field>
+              <v-btn color="primary" type="submit">Sign In</v-btn>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      username: '',
+      password: ''
+    };
+  },
+  methods: {
+    async signIn() {
+      try {
+        await this.$store.dispatch('signIn', {
+          username: this.username,
+          password: this.password
+        });
+        this.$router.push('/dashboard');
+      } catch (error) {
+        console.error('Error during sign in:', error);
+      }
+    }
+  }
+};
+</script>
